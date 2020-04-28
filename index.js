@@ -1,12 +1,6 @@
-const express = require('express');
-const app = express();
-// const router = Router();
+const app = require('./app');
+const http = require('http');
 
-app.get('/', (req, res) => {
-  res.send('Hello Kern');
-})
 
-const PORT = 4000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const server = http.createServer(app);
+
