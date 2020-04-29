@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set('useFindAndModify', false);
+
 const blogPostSchema = new Mongoose.Schema({
     title: String,
     body: String,
@@ -8,4 +10,4 @@ const blogPostSchema = new Mongoose.Schema({
     hidden: Boolean
 });
 
-module.exports = mongoose.model('BlogPost', blogSchema);
+module.exports = mongoose.model('BlogPost', blogPostSchema);
