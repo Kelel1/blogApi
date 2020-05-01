@@ -17,12 +17,26 @@ blogsRouter.get('/:id', (request, response, next) => {
       }       
     })
     .catch(error => next(error));
-})
+});
 
 blogsRouter.post('/', (request, response, next) => {
   const body = request.body
   
   const blog = new BlogPost({
-    content: b
-  })
-})
+    title: body.title,
+    content: body.content,
+    comments: body.comments,
+    date = new Date(),
+    hidden = body.hidden
+  });
+
+//  See about converting to async routes. Thursday 4.30.2020
+  blog.save()
+    .then(savedBlog => {
+      response.json(savedBlog.toJSON());
+    })
+    .catch(error => next(error));
+});
+
+
+module.exports = blogsRouter

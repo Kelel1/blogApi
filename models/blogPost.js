@@ -5,9 +5,9 @@ mongoose.set('useFindAndModify', false);
 
 const blogPostSchema = new Mongoose.Schema({
     title: String,
-    body: String,
-    date: Date,
+    content: String,    
     comments: [{ body: String, date: Date }],
+    date: Date,
     hidden: Boolean
 });
 
