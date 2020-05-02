@@ -26,8 +26,8 @@ blogsRouter.post('/', (request, response, next) => {
     title: body.title,
     content: body.content,
     comments: body.comments,
-    date = new Date(),
-    hidden = body.hidden
+    date: new Date(),
+    hidden: body.hidden || false
   });
 
 //  See about converting to async routes. Thursday 4.30.2020

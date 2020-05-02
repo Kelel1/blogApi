@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
 
-const blogPostSchema = new Mongoose.Schema({
+const blogPostSchema = new mongoose.Schema({
     title: String,
     content: String,    
     comments: [{ body: String, date: Date }],
