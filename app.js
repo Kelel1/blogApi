@@ -1,11 +1,29 @@
-const config = require('./utils/config');
 const express = require('express');
+const config = require('./utils/config');
 const app = express();
 const blogsRouter = require('./controllers/blogs');
+// const bodyParser = require('body-parser');
+
+
+const mongoose = require('mongoose');
+
+mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('connected to MongoDB');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+  
+  // app.use(bodyParser.json());
+  app.use(express.json());
+
+  app.use('/api/blogs', blogsRouter);
+
 app.get('/', (req, res) => {
   res.send('Hello Kern');
 });
-
-app.use('/api/blogs', blogsRouter);
 
 module.exports = app;
