@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
 const adminUser = new Mongoose.Schema({
-   email: String,
-   password: String
+   username: String,
+   passwordHash: String
 });
 
 module.exports = mongoose.model('AdminUser', adminUser);
