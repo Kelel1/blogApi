@@ -1,11 +1,12 @@
-const express = require('express');
-const config = require('./utils/config');
-const app = express();
+const express     = require('express');
+const config      = require('./utils/config');
+const app         = express();
 const blogsRouter = require('./controllers/blogs');
+const mongoose    = require('mongoose');
 // const bodyParser = require('body-parser');
 
 
-const mongoose = require('mongoose');
+
 
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

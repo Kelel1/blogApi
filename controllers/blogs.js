@@ -1,5 +1,5 @@
 const blogsRouter = require('express').Router();
-const BlogPost = require('../models/blogPost');
+const BlogPost    = require('../models/blogPost');
 
 blogsRouter.get('/', (request, response, next) => {
   BlogPost.find({}).then(blogs => {
