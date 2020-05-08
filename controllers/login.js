@@ -6,10 +6,10 @@ const User        = require('../models/user');
 loginRouter.post('/', async (request, response) => {
   const body = request.body;
 
-  const user = await User.findOne({ usename: body.usename });
+  const user = await User.findOne({ username: body.username });
   const passwordCorrect = user === null
     ? false
-    : await bcrypt.compare(body.passord, user.passwordHash);
+    : await bcrypt.compare(body.password, user.passwordHash);
 
   if (!(user && passwordCorrect)) {
     return response.status(401).json({
@@ -18,7 +18,7 @@ loginRouter.post('/', async (request, response) => {
   }
 
   const userForToken = {
-    usename: usename,
+    username: user.username,
     id: user._id
   }
 
@@ -26,7 +26,7 @@ loginRouter.post('/', async (request, response) => {
 
   response
     .status(200)
-    .send({ token, usename: use.usename })
+    .send({ token, username: user.username })
 });
 
 module.exports = loginRouter
