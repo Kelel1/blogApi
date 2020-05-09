@@ -7,7 +7,7 @@ const blogPostSchema = new mongoose.Schema({
     title: String,
     content: String,    
     comments: [{ body: String, date: Date }],
-    date: Date,
+    date: { type: Date, default: Date.now },
     hidden: Boolean
 });
 
