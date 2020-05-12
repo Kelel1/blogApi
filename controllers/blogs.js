@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router();
 const BlogPost    = require('../models/blogPost');
+const User        = require('../models/user');
 const jwt         = require('jsonwebtoken');
 
 
@@ -22,7 +23,7 @@ blogsRouter.get('/:id', (request, response, next) => {
 });
 
 // Get blogger token
-const getTokenFrom = requset => {
+const getTokenFrom = request => {
   const authorization = request.get('authorization');
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
     return authorization.substring(7);
@@ -31,13 +32,16 @@ const getTokenFrom = requset => {
 }
 
 blogsRouter.post('/', async (request, response, next) => {
-  const body = request.body;
-  const token = getTokenFrom(requset);
+  const body = request.body;  
+
+  const token = getTokenFrom(request);
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' });
   }
-  const user = await user.findById(decodedToken.id);
+
+  const user = await User.findById(decodedToken.id);
+  
 
   
   const blog = new BlogPost({
@@ -45,12 +49,20 @@ blogsRouter.post('/', async (request, response, next) => {
     content: body.content,
     comments: body.comments,
     date: new Date(),
-    hidden: body.hidden || false
+    hidden: body.hidden || false,
+    user: user._id
   });
 
+  try {
+    const savedBlog = await blog.save();
+    response.json(savedBlog.toJSON());    
+  } catch (error) {
+    next(exception);
+    
+  }
+
 //  See about converting to async routes. Thursday 4.30.2020
-const savedBlog = await blog.save();
-user.blogs = user.blogs.concat(savedBlog._id);
+// user.blogs = user.blogs.concat(savedBlog._id);
 await user.save();
 
 });
