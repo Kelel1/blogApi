@@ -1,6 +1,6 @@
-const bcrypt        = require('bcrypt');
+const bcrypt         = require('bcrypt');
 const adminsRouter   = require('express').Router();
-const Admin         = require('../models/admin');
+const Admin          = require('../models/admin');
 
 
 
