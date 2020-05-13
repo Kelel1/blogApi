@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 
 mongoose.set('useFindAndModify', false);
 
-const user = new mongoose.Schema({
+const admin = new mongoose.Schema({
    username: String,
    passwordHash: String,
-   admin: Boolean
 });
 
-module.exports = mongoose.model('User', user);
+module.exports = mongoose.model('Admin', admin);

@@ -1,7 +1,7 @@
-const blogsRouter = require('express').Router();
-const BlogPost    = require('../models/blogPost');
-const User        = require('../models/user');
-const jwt         = require('jsonwebtoken');
+const blogsRouter  = require('express').Router();
+const BlogPost     = require('../models/blogPost');
+const Admin        = require('../models/admin');
+const jwt          = require('jsonwebtoken');
 
 
 blogsRouter.get('/', (request, response, next) => {
@@ -23,6 +23,9 @@ blogsRouter.get('/:id', (request, response, next) => {
 });
 
 // Get blogger token
+/*
+  Move getTokenFrom to middleware
+*/
 const getTokenFrom = request => {
   const authorization = request.get('authorization');
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
@@ -40,7 +43,7 @@ blogsRouter.post('/', async (request, response, next) => {
     return response.status(401).json({ error: 'token missing or invalid' });
   }
 
-  const user = await User.findById(decodedToken.id);
+  const admin = await Admin.findById(decodedToken.id);
   
 
   
@@ -49,8 +52,8 @@ blogsRouter.post('/', async (request, response, next) => {
     content: body.content,
     comments: body.comments,
     date: new Date(),
-    hidden: body.hidden || false,
-    user: user._id
+    hidden: body.hidden || false
+    // admin: admin._id
   });
 
   try {
@@ -63,7 +66,7 @@ blogsRouter.post('/', async (request, response, next) => {
 
 //  See about converting to async routes. Thursday 4.30.2020
 // user.blogs = user.blogs.concat(savedBlog._id);
-await user.save();
+await admin.save();
 
 });
 
