@@ -1,5 +1,6 @@
 const express      = require('express');
 const config       = require('./utils/config');
+const cors         = require('cors');
 const app          = express();
 const blogsRouter  = require('./controllers/blogs');
 const adminsRouter = require('./controllers/admins');
@@ -21,11 +22,13 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
 
   
 // app.use(bodyParser.json());
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/blogs', blogsRouter);
 app.use('/api/admins', adminsRouter);
 app.use('/api/login', loginRouter);
+
 
 app.get('/', (req, res) => {
   res.send('Hello Kern');
